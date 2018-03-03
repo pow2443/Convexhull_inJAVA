@@ -1,0 +1,587 @@
+package convexhull;
+
+/**
+ *Project Name : Convex Hull
+ * Class:       <b>ConvexHullView</b>
+ * File:        ConvexHullView.java
+ * <pre>
+ * Description: In mathematics, the convex hull or convex envelope of a set X of 
+ * points in the Euclidean plane or Euclidean space is the smallest 
+ * convex set that contains X. For instance, when X is a bounded 
+ * subset of the plane, the convex hull may be visualized as the 
+ * shape enclosed by a rubber band stretched around X.
+ * Formally, the convex hull may be defined as the intersection 
+ * of all convex sets containing X or as the set of all convex 
+ * combinations of points in X. 
+ * With the latter definition, convex hulls may be extended from 
+ * Euclidean spaces to arbitrary real vector spaces; they may also 
+ * be generalized further, to oriented matroids.
+ * The algorithmic problem of finding the convex hull of a finite 
+ * set of points in the plane or other low-dimensional Euclidean 
+ * spaces is one of the fundamental problems of computational geometry.
+ * Platform:     PC, Windows 7, jdk 1.8.0_25, NetBeans 8.0.2
+ * Date:         25/Apr/2016
+ * History Log:  25/Apr/2016
+ * @version:    1.0
+ * @see:        javax.swing.JFrame
+ * @author:     <i>Edgar Hyeongwoo Park</i>
+ *Images cited work: park.jpg(https://dribbble.com/shots/2065011-Board-Game-Logo-Alt)
+ *                  (This picture doesn't require copyright to me because I use this picture for education)
+ *                   convexhull.png(https://www.google.com/search?q=convex+hull&newwindow=1&espv=2&biw=1366&bih=623&source=lnms&tbm=isch&sa=X&ved=0ahUKEwjs8u202q3MAhUTzmMKHTwaDjkQ_AUIBigB)
+ *                  (This picture doesn't require copyright to me because I use this picture for education)
+ *                  
+ * </pre>
+ */
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Random;
+import java.util.Set;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.util.TreeSet;
+import javax.swing.JOptionPane;
+import resource.PrintUtilities;
+
+/**~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+* Class: ConvexHullView
+* File: ConvexHullView.java
+* Description: This is main GUI to print convex hull.
+* this will print convex hull with given information. 
+* @author: Edgar Hyeongwoo Park
+* Environment: PC, Windows 7, jdk1.8, NetBeans 7.0
+* Date: 25/Apr/2016
+* @version 1.0
+* @see javax.swing.JFrame
+* History Log:  25/Apr/2016
+*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+public class ConvexHullView extends javax.swing.JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private Set<Point> point_set=null;
+    private ConvexHull convexhull;
+    
+//    private Object versionJComboBox;
+    /**
+     * Creates new form ConvexHullView
+     */
+    public ConvexHullView() {
+        
+        super();
+        initComponents();
+        Collection <Point> temp=new HashSet<Point>();
+        temp.add(new Point (1,1));
+	temp.add(new Point (1,2));
+	temp.add(new Point (2,1));
+        drawConvexHull(temp);
+         this.setBackground(Color.WHITE);
+        // Set icon image
+                 this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/resource/convexhull.png"));
+                 // Set okJButton as default
+                 this.getRootPane().setDefaultButton(drawJButton);
+                 // Set title
+                 this.setTitle("Convex Hull");
+                 // Center the form and set the focus 
+                 this.setLocationRelativeTo(null);
+        
+        
+    }
+
+    public void removeAllPoints()
+	{
+		if(point_set!=null)
+			point_set.clear();
+		clearDrawPanel();
+	}
+    
+    public void clearDrawPanel()
+	{
+		drawJPanel.getGraphics().clearRect(0, 0, drawJPanel.getWidth(), drawJPanel.getHeight());
+	}
+    
+    public void drawConvexHull(Collection <Point> points)
+	{
+            
+                drawJPanel.setBackground(Color.white);
+		switch(versionJComboBox.getSelectedIndex())
+		{
+		case 0:
+			convexhull=new convexhull.dnq.DivideAndConquerAlg();
+			break;
+		case 1:
+			convexhull=new convexhull.dnq.ChenAlg();
+			break;
+		default:
+			convexhull=new convexhull.dnq.DivideAndConquerAlg();
+			break;
+		}
+		convexhull.setSpeed(speedJSlider.getValue());
+                
+		if(viewJcheckbox2.isSelected())
+			convexhull.setGraphics(drawJPanel.getGraphics());
+		clearDrawPanel();
+		for(Point p: points)
+		{
+			drawJPanel.getGraphics().fillRect(p.x-1,p.y-1,3,3);
+			convexhull.addPoint(p.x, p.y);
+		}
+		convexhull.start();
+		drawJPanel.getGraphics().drawPolygon(convexhull.getConvexHullPolygon());
+
+	}
+    
+    public void paint(Graphics g)
+	{
+		super.paint(g);
+		//g.drawLine(100, 100, 200, 200);
+	}
+    
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        JLabel = new javax.swing.JLabel();
+        versionJComboBox = new javax.swing.JComboBox();
+        dotsJLabel = new javax.swing.JLabel();
+        autoJLabel = new javax.swing.JLabel();
+        dotsJTextField = new javax.swing.JTextField();
+        autoJComboBox = new javax.swing.JComboBox();
+        viewJLabel = new javax.swing.JLabel();
+        speedJSlider = new javax.swing.JSlider();
+        speedJLabel = new javax.swing.JLabel();
+        eraseJButton = new javax.swing.JButton();
+        drawJPanel = new javax.swing.JPanel();
+        drawJButton = new javax.swing.JButton();
+        viewJcheckbox2 = new javax.swing.JCheckBox();
+        timeJLabel = new javax.swing.JLabel();
+        menuJMenuBar = new javax.swing.JMenuBar();
+        fileJMenu = new javax.swing.JMenu();
+        clearJMenuItem = new javax.swing.JMenuItem();
+        printJMenuItem = new javax.swing.JMenuItem();
+        quitJMenuItem = new javax.swing.JMenuItem();
+        helpJMenu = new javax.swing.JMenu();
+        aboutJMenuItem = new javax.swing.JMenuItem();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        JLabel.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        JLabel.setText("Select Algolithm :");
+        JLabel.setToolTipText("Select what you want to use method to paint convex hull");
+
+        versionJComboBox.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        versionJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Divide And Conquer Version ", "Chen's Version ", " " }));
+        versionJComboBox.setToolTipText("Which method do you want to use to paint convex hull ");
+        versionJComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                versionJComboBoxItemStateChanged(evt);
+            }
+        });
+        versionJComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                versionJComboBoxActionPerformed(evt);
+            }
+        });
+
+        dotsJLabel.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        dotsJLabel.setText("How many dots do you want to draw?");
+        dotsJLabel.setToolTipText("How many dots do you want to draw?");
+
+        autoJLabel.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        autoJLabel.setText("Select auto or hand operated :");
+        autoJLabel.setToolTipText("Select auto or hand operated");
+
+        dotsJTextField.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        dotsJTextField.setToolTipText("Input how many dots do you need?");
+
+        autoJComboBox.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        autoJComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Auto", "Self" }));
+        autoJComboBox.setToolTipText("Select auto or self");
+
+        viewJLabel.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        viewJLabel.setText("Select how fast you want to watch :");
+        viewJLabel.setToolTipText("Select how fast do you want to watch :");
+
+        speedJSlider.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        speedJSlider.setMaximum(40);
+        speedJSlider.setToolTipText("Slide for speed ");
+        speedJSlider.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                speedJSliderMouseMoved(evt);
+            }
+        });
+
+        speedJLabel.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        speedJLabel.setText("line / sec");
+        speedJLabel.setToolTipText("showing how many fast ");
+
+        eraseJButton.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        eraseJButton.setMnemonic('E');
+        eraseJButton.setText("Erase");
+        eraseJButton.setToolTipText("Erase all dots");
+        eraseJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eraseJButtonActionPerformed(evt);
+            }
+        });
+
+        drawJPanel.setToolTipText("Draw pad");
+        drawJPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                drawJPanelMouseReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout drawJPanelLayout = new javax.swing.GroupLayout(drawJPanel);
+        drawJPanel.setLayout(drawJPanelLayout);
+        drawJPanelLayout.setHorizontalGroup(
+            drawJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        drawJPanelLayout.setVerticalGroup(
+            drawJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 459, Short.MAX_VALUE)
+        );
+
+        drawJButton.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        drawJButton.setMnemonic('D');
+        drawJButton.setText("Draw");
+        drawJButton.setToolTipText("Do you want to watch result for convex hull?");
+        drawJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                drawJButtonActionPerformed(evt);
+            }
+        });
+
+        viewJcheckbox2.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+        viewJcheckbox2.setText("View Process ");
+        viewJcheckbox2.setToolTipText("Do you want to watch all process painting convex hull ");
+
+        menuJMenuBar.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
+
+        fileJMenu.setMnemonic('F');
+        fileJMenu.setText("File");
+        fileJMenu.setToolTipText("tool group");
+
+        clearJMenuItem.setMnemonic('C');
+        clearJMenuItem.setText("Clear");
+        clearJMenuItem.setToolTipText("Do you want to clear paint board?");
+        clearJMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearJMenuItemActionPerformed(evt);
+            }
+        });
+        fileJMenu.add(clearJMenuItem);
+
+        printJMenuItem.setMnemonic('P');
+        printJMenuItem.setText("Print");
+        printJMenuItem.setToolTipText("Do you want to print the convex hull?");
+        printJMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printJMenuItemActionPerformed(evt);
+            }
+        });
+        fileJMenu.add(printJMenuItem);
+
+        quitJMenuItem.setMnemonic('Q');
+        quitJMenuItem.setText("Quit");
+        quitJMenuItem.setToolTipText("Do you want to exit?");
+        quitJMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitJMenuItemActionPerformed(evt);
+            }
+        });
+        fileJMenu.add(quitJMenuItem);
+
+        menuJMenuBar.add(fileJMenu);
+
+        helpJMenu.setMnemonic('H');
+        helpJMenu.setText("Help");
+        helpJMenu.setToolTipText("Do you want to watch about form?");
+
+        aboutJMenuItem.setMnemonic('A');
+        aboutJMenuItem.setText("About");
+        aboutJMenuItem.setToolTipText("About will help you to understand the funtion of this");
+        aboutJMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aboutJMenuItemActionPerformed(evt);
+            }
+        });
+        helpJMenu.add(aboutJMenuItem);
+
+        menuJMenuBar.add(helpJMenu);
+
+        setJMenuBar(menuJMenuBar);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(242, 242, 242)
+                .addComponent(viewJLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(speedJSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(speedJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(drawJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(JLabel)
+                        .addGap(121, 121, 121))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(viewJcheckbox2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(versionJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(autoJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(autoJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(dotsJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(dotsJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(31, 31, 31)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(drawJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(eraseJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(72, 72, 72))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(timeJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 301, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(drawJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(timeJLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JLabel)
+                            .addComponent(dotsJLabel)
+                            .addComponent(dotsJTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(autoJLabel)
+                            .addComponent(autoJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(versionJComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(speedJSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(viewJLabel)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(viewJcheckbox2)))
+                        .addGap(4, 4, 4))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(drawJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(eraseJButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(speedJLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14))
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void versionJComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_versionJComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_versionJComboBoxActionPerformed
+
+    private void speedJSliderMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_speedJSliderMouseMoved
+        // TODO add your handling code here:
+        speedJLabel.setText(String.valueOf(speedJSlider.getValue()+" line/sec"));
+
+    }//GEN-LAST:event_speedJSliderMouseMoved
+
+    private void drawJPanelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawJPanelMouseReleased
+        // TODO add your handling code here:
+        System.out.println("mouseReleased()"); // TODO Auto-generated Event stub mouseReleased()
+	if(point_set==null)
+	point_set=new HashSet<Point>();
+	if(evt.getButton()==1&&autoJComboBox.getSelectedIndex()==1)
+	{
+            Point p=evt.getPoint();
+            point_set.add(p);
+            drawJPanel.getGraphics().fillRect(p.x-1,p.y-1,3,3);
+	}
+        
+        
+    }//GEN-LAST:event_drawJPanelMouseReleased
+
+    private void versionJComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_versionJComboBoxItemStateChanged
+      
+        System.out.println("itemStateChanged()"); // TODO Auto-generated Event stub itemStateChanged()
+	drawJPanel.getGraphics().clearRect(0, 0, drawJPanel.getWidth(), drawJPanel.getHeight());
+	if(autoJComboBox.getSelectedIndex()==1)
+	{
+            point_set=new HashSet<Point>();
+	}
+                                        
+    }//GEN-LAST:event_versionJComboBoxItemStateChanged
+
+    private void eraseJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eraseJButtonActionPerformed
+       
+        System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+	drawJPanel.getGraphics().clearRect(0, 0, drawJPanel.getWidth(), drawJPanel.getHeight());
+	point_set.clear();
+        
+    }//GEN-LAST:event_eraseJButtonActionPerformed
+
+    private void drawJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_drawJButtonActionPerformed
+       
+        try{
+        if(point_set==null)
+	point_set=new TreeSet<Point>();
+
+	if(autoJComboBox.getSelectedIndex()==0)
+        {
+            
+            Random rand=new Random();
+            point_set=new HashSet<Point>();
+            long startTime = System.currentTimeMillis();
+            for(int i=0;i<Integer.parseInt(dotsJTextField.getText());i++)
+            {
+
+                point_set.add(new Point(10+rand.nextInt(drawJPanel.getWidth()-10),10+rand.nextInt(drawJPanel.getHeight()-10)));
+
+            }
+            long endTime = System.currentTimeMillis();
+            timeJLabel.setText("Time to show convex hull: " + (endTime - startTime) 
+            + " milliseconds");
+            
+        }else{
+           
+            if(point_set.size()<3)
+            
+            return;
+	}
+
+	drawConvexHull(point_set);
+	System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+        }
+       catch(NumberFormatException numex){
+            
+            //showing a message about exception situation
+             JOptionPane.showMessageDialog(null,
+            "Please enter only a Postive Integer Number",
+            "Invaild Error", JOptionPane.WARNING_MESSAGE);
+            
+             //get focus
+            dotsJTextField.requestFocus();
+            
+        }   
+        
+    }//GEN-LAST:event_drawJButtonActionPerformed
+
+    private void aboutJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutJMenuItemActionPerformed
+        // show about form
+        About about = new About();
+        about.setVisible(true);
+        
+    }//GEN-LAST:event_aboutJMenuItemActionPerformed
+
+    private void printJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printJMenuItemActionPerformed
+       
+        //using an exisiting helper file from
+        //http://www.apl.jhu.edu/~hall/java/Swing-Tutorial/Swing-Tutorial/-Printing.html
+         PrintUtilities.printComponent(this);
+        
+    }//GEN-LAST:event_printJMenuItemActionPerformed
+
+    private void clearJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearJMenuItemActionPerformed
+        // TODO add your handling code here:
+    //instead of eraseJButton  
+    eraseJButtonActionPerformed(evt);    
+        
+    }//GEN-LAST:event_clearJMenuItemActionPerformed
+
+    private void quitJMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitJMenuItemActionPerformed
+       
+        //function of exitJbutton
+        System.exit(0);
+        
+    }//GEN-LAST:event_quitJMenuItemActionPerformed
+
+    
+    
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(ConvexHullView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(ConvexHullView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(ConvexHullView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(ConvexHullView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ConvexHullView().setVisible(true);
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JLabel;
+    private javax.swing.JMenuItem aboutJMenuItem;
+    private javax.swing.JComboBox autoJComboBox;
+    private javax.swing.JLabel autoJLabel;
+    private javax.swing.JMenuItem clearJMenuItem;
+    private javax.swing.JLabel dotsJLabel;
+    private javax.swing.JTextField dotsJTextField;
+    private javax.swing.JButton drawJButton;
+    private javax.swing.JPanel drawJPanel;
+    private javax.swing.JButton eraseJButton;
+    private javax.swing.JMenu fileJMenu;
+    private javax.swing.JMenu helpJMenu;
+    private javax.swing.JMenuBar menuJMenuBar;
+    private javax.swing.JMenuItem printJMenuItem;
+    private javax.swing.JMenuItem quitJMenuItem;
+    private javax.swing.JLabel speedJLabel;
+    private javax.swing.JSlider speedJSlider;
+    private javax.swing.JLabel timeJLabel;
+    private javax.swing.JComboBox versionJComboBox;
+    private javax.swing.JLabel viewJLabel;
+    private javax.swing.JCheckBox viewJcheckbox2;
+    // End of variables declaration//GEN-END:variables
+}
